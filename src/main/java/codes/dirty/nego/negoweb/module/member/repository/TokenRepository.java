@@ -12,19 +12,18 @@ public class TokenRepository {
     private static long sequence = 0L;
 
     public String save(String memberId) {
-        String token = "token" + sequence;
+        String tokenId = "token" + sequence + "-" + memberId;
         sequence++;
-        tokens.put(token, new Token(token, System.currentTimeMillis()+1800000, memberId));
+        tokens.put(memberId, new Token(tokenId, System.currentTimeMillis()+1800000, memberId));
         System.out.println(tokens);
-        return token;
+        return tokenId;
     }
 
-    public Token findTokenByToken(String token) {
-        return tokens.get(token);
+    public Token findToken(String memberId) {
+        return tokens.get(memberId);
     }
 
-    public String delete(String token){
-        tokens.remove(token);
-        return token;
+    public void deleteToken(String memberId){
+        tokens.remove(memberId);
     }
 }

@@ -16,18 +16,27 @@ public class TokenService {
         return tokenRepository.save(memberId);
     }
 
-    public Token findToken(String token){
-        return tokenRepository.findTokenByToken(token);
+    public Token findTokenByTokenId(String tokenId){
+        String[] splitToken = tokenId.split("-");
+        return tokenRepository.findToken(splitToken[1]);
+    }
+    public void deleteTokenByTokenId(String tokenId){
+        String[] splitToken = tokenId.split("-");
+        tokenRepository.deleteToken(splitToken[1]);
+    }
+    public void deleteTokenByMemberId(String memberId) {
+        tokenRepository.deleteToken(memberId);
     }
 
-    public boolean checkToken(String token){
+    public boolean checkToken(String tokenId){
 
-        if (findToken(token) != null){
-            if (findToken(token).getExpirationTime() > System.currentTimeMillis()){
+        if (findTokenByTokenId(tokenId) != null){
+            if (findTokenByTokenId(tokenId).getTokenId().equals(tokenId) &&
+                    findTokenByTokenId(tokenId).getExpirationTime() > System.currentTimeMillis()){
                 return true;
             }
         }
-        tokenRepository.delete(token);
+        deleteTokenByTokenId(tokenId);
         return false;
     }
 

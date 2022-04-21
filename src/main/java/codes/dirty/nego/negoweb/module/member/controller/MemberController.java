@@ -115,9 +115,10 @@ public class MemberController {
         Member member = memberService.findMemberId(form.getMemberId()).get();
 
         if (member.getPassword().equals(form.getPassword())) {
+            tokenService.deleteTokenByMemberId(member.getMemberId());
             return ResponseEntity.status(HttpStatus.FOUND)
                                  .header(HttpHeaders.SET_COOKIE,
-                                         "login-token=" + tokenService.create(form.getMemberId()) + ";Path=/")
+                                         "login-token=" + tokenService.create(member.getMemberId()) + ";Path=/")
                                  .header(HttpHeaders.LOCATION, "/")
                                  .build();
         }
@@ -130,7 +131,7 @@ public class MemberController {
         for (Cookie cookie : cookies){
             if (cookie.getName().equals("login-token")){
                 if (tokenService.checkToken(cookie.getValue())){
-                    return ResponseEntity.ok(tokenService.findToken(cookie.getValue()).getLoginId() + "님 반갑습니다");
+                    return ResponseEntity.ok(tokenService.findTokenByTokenId(cookie.getValue()).getLoginId() + "님 반갑습니다");
                 }
             }
         }

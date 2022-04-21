@@ -8,7 +8,7 @@ import lombok.ToString;
 @Getter
 @ToString
 public class Token {
-    private String loginToken;
+    private String tokenId;
 
     private Long expirationTime;
     private String loginId;
@@ -16,12 +16,12 @@ public class Token {
     public Token(){
     }
 
-    public Token(String loginToken) {
-        this.loginToken = loginToken;
+    public Token(String tokenId) {
+        this.tokenId = tokenId;
     }
 
-    public Token(String loginToken, Long expirationTime, String loginId) {
-        this.loginToken = loginToken;
+    public Token(String tokenId, Long expirationTime, String loginId) {
+        this.tokenId = tokenId;
         this.expirationTime = expirationTime;
         this.loginId = loginId;
     }
