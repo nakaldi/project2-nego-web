@@ -14,7 +14,7 @@ public class TokenRepository {
     public String save(String memberId) {
         String token = "token" + sequence;
         sequence++;
-        tokens.put(token, new Token(token, System.currentTimeMillis()+10000, memberId));
+        tokens.put(token, new Token(token, System.currentTimeMillis()+1800000, memberId));
         System.out.println(tokens);
         return token;
     }

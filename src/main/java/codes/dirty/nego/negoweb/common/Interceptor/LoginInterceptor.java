@@ -30,8 +30,8 @@ public class LoginInterceptor implements HandlerInterceptor {
                 }
             }
         }
-        response.sendRedirect("/members/login");
-        return true;
+        response.setStatus(401);
+        return false;
     }
 
 

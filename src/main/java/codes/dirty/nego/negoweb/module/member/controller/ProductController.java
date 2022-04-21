@@ -46,12 +46,11 @@ public class ProductController {
         long startTime = System.currentTimeMillis();
         long delay = 0;
         for (int i = 0; i < 10000; i++){
-            for (int j = 0; j < 3000000; j++){
+            for (int j = 0; j < 1000000; j++){
                 delay += 1;
             }
         }
-//        Thread.sleep(1000);
-//        System.out.println(delay);
+        System.out.println("Success purchasing");
 
         return ResponseEntity.ok("Success your purchasing : " + form.getPurchaseQuantity() + "개\n"+ (System.currentTimeMillis()-startTime)+"ms 지연 " + delay);
     }
