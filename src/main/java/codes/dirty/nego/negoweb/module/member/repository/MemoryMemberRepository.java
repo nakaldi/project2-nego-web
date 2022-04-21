@@ -11,13 +11,13 @@ import java.util.Optional;
 
 public class MemoryMemberRepository implements MemberRepository {
 
-    private HashMap<Long, Member> store = new HashMap<>();
+    private HashMap<String, Member> store = new HashMap<>();
     private static long sequence = 0L;
 
     @Override
     public Member save(Member member) {
         member.setId(sequence++);
-        store.put(member.getId(), member);
+        store.put(member.getMemberId(), member);
         return member;
     }
 
@@ -28,9 +28,7 @@ public class MemoryMemberRepository implements MemberRepository {
 
     @Override
     public Optional<Member> findByMemberId(String memberId) {
-        return store.values().stream()
-                    .filter(member -> member.getMemberId().equals(memberId))
-                    .findAny();
+        return Optional.ofNullable(store.get(memberId));
     }
 
     @Override
