@@ -23,10 +23,12 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
         Cookie[] cookies = request.getCookies();
-        for (Cookie cookie : cookies){
-            if (cookie.getName().equals("login-token")){
-                if (tokenService.checkToken(cookie.getValue())){
-                    return true;
+        if(cookies != null){
+            for (Cookie cookie : cookies){
+                if (cookie.getName().equals("login-token")){
+                    if (tokenService.checkToken(cookie.getValue())){
+                        return true;
+                    }
                 }
             }
         }
