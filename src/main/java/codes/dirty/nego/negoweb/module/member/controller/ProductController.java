@@ -1,6 +1,7 @@
 package codes.dirty.nego.negoweb.module.member.controller;
 
 import codes.dirty.nego.negoweb.common.PurchaseForm;
+import codes.dirty.nego.negoweb.common.config.ProductProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -10,9 +11,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class ProductController {
+    private final ProductProperty productProperty;
 
     @Autowired
-    public ProductController (){
+    public ProductController (ProductProperty productProperty){
+        this.productProperty = productProperty;
     }
 
     @GetMapping(value = "/product/list")
@@ -46,13 +49,13 @@ public class ProductController {
         long startTime = System.currentTimeMillis();
         long delay = 0;
         for (int i = 0; i < 10000; i++){
-            for (int j = 0; j < 1000000; j++){
+            for (int j = 0; j < productProperty.getPurchasingLatency(); j++){
                 delay += 1;
             }
         }
-        System.out.println("Success purchasing");
+        System.out.println("Success purchasing " + (System.currentTimeMillis()-startTime)+"ms");
 
-        return ResponseEntity.ok("Success your purchasing : " + form.getPurchaseQuantity() + "개\n"+ (System.currentTimeMillis()-startTime)+"ms 지연 " + delay);
+        return ResponseEntity.ok("Success your purchasing : " + form.getPurchaseQuantity() + "개\n"+ delay);
     }
 
     @GetMapping(value = "/product/success")
